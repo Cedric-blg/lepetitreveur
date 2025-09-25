@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Child index{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h1 class="h3 mb-0">Child index</h1>
+        <a href="{{ path('app_child_new') }}" class="btn btn-primary">Create new</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>First_name</th>
+                    <th>Birthday</th>
+                    <th>Allergies</th>
+                    <th>Register_date</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for child in children %}
+                <tr>
+                    <td>{{ child.id }}</td>
+                    <td>{{ child.name }}</td>
+                    <td>{{ child.firstName }}</td>
+                    <td>{{ child.birthday ? child.birthday|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ child.allergies }}</td>
+                    <td>{{ child.registerDate ? child.registerDate|date('Y-m-d H:i:s') : '' }}</td>
+                    <td class="text-end">
+                        <div class="btn-group btn-group-sm" role="group">
+                            <a href="{{ path('app_child_show', {'id': child.id}) }}" class="btn btn-outline-secondary">Show</a>
+                            <a href="{{ path('app_child_edit', {'id': child.id}) }}" class="btn btn-primary">Edit</a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
