@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PresenceRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PresenceRepository::class)]
@@ -16,10 +17,10 @@ class Presence
     #[ORM\Column]
     private ?\DateTimeImmutable $date_day = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTime $arrival_hour = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTime $departure_time = null;
 
     #[ORM\ManyToOne(inversedBy: 'presences')]

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des présences{% endblock %}
+
+{% block body %}
+    <h1>Liste des présences</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Enfant</th>
+                <th>Heure d'arrivée</th>
+                <th>Heure de départ</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for presence in presences %}
+            <tr>
+                <td>{{ presence.dateDay ? presence.dateDay|date('d/m/Y') : '' }}</td>
+                <td>{{ presence.child.name }} {{ presence.child.firstName }}</td>
+                <td>{{ presence.arrivalHour ? presence.arrivalHour|date('H:i:s') : '' }}</td>
+                <td>{{ presence.departureTime ? presence.departureTime|date('H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_presence_show', {'id': presence.id}) }}">Voir</a>
+                    <a href="{{ path('app_presence_edit', {'id': presence.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucune présence trouvée</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_presence_new') }}">Nouvelle présence</a>
+{% endblock %}

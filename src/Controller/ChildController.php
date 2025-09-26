@@ -6,6 +6,7 @@ use App\Entity\Child;
 use App\Form\ChildType;
 use App\Repository\ChildRepository;
 use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,11 +55,30 @@ final class ChildController extends AbstractController
         ]);
     }
 
+    #[Route('/child-search', name: 'child_search')]
+    public function search(Request $request, ChildRepository $repo): JsonResponse
+    {
+        $term = $request->query->get('q', '');
+        $children = $repo->createQueryBuilder('c')
+            ->where('c.name LIKE :term OR c.first_name LIKE :term')
+            ->setParameter('term', "%$term%")
+            ->getQuery()
+            ->getResult();
+
+        $results = array_map(fn($c) => [
+            'id' => $c->getId(),
+            'text' => trim(($c->getFirstName() ?? '') . ' ' . ($c->getName() ?? '')) ?: ('Enfant #' . $c->getId()),
+        ], $children);
+        return $this->json($results);
+    }
+
     #[Route('/{id}', name: 'app_child_show', methods: ['GET'])]
     public function show(Child $child): Response
     {
+        $parents = $child->getUsers();
         return $this->render('child/show.html.twig', [
             'child' => $child,
+            'parents' => $parents,
         ]);
     }
 
