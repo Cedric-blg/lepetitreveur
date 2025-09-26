@@ -1,14 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PageController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-<div class="p-4 bg-light rounded-3">
-    <h1 class="display-6">Hello {{ controller_name }}! ✅</h1>
-    <p class="mb-0">This friendly message is coming from:</p>
-    <ul class="mb-0">
-        <li>Your controller at <code>C:/wamp64/www/lepetitreveur/src/Controller/PageController.php</code></li>
-        <li>Your template at <code>C:/wamp64/www/lepetitreveur/templates/page/index.html.twig</code></li>
-    </ul>
+<div class="row g-4">
+    <div class="col-12 col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Ajouter un enfant</h5>
+                <p class="card-text text-muted mb-4">Créer une nouvelle fiche enfant.</p>
+                <a href="{{ path('app_child_new') }}" class="btn btn-primary mt-auto">Ajouter</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Ajouter un parent</h5>
+                <p class="card-text text-muted mb-4">Créer un nouvel parent.</p>
+                <a href="{{ path('app_user_new') }}" class="btn btn-primary mt-auto">Ajouter</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Ajouter une présence</h5>
+                <p class="card-text text-muted mb-4">Enregistrer la présence d'un enfant.</p>
+                <a href="{{ path('app_presence_new') }}" class="btn btn-primary mt-auto">Ajouter</a>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
